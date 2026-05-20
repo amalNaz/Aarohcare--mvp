@@ -14,6 +14,8 @@ class LocalAuthRepository {
   static const _currentUserKey = 'current_user';
   static const _isAdminSessionKey = 'is_admin_session';
   static const _adminSessionKey = 'admin_session';
+  static const _rememberMeKey = 'remember_me';
+  static const _rememberedIdentifierKey = 'remembered_identifier';
 
   final ValueNotifier<List<UserProfile>> usersNotifier =
       ValueNotifier<List<UserProfile>>(<UserProfile>[]);
@@ -118,6 +120,28 @@ class LocalAuthRepository {
       // Debug: user not found or password mismatch
       return null;
     }
+  }
+
+  Future<void> setRememberMe({required bool remember, String? identifier}) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_rememberMeKey, remember);
+    if (remember && identifier != null && identifier.isNotEmpty) {
+      await prefs.setString(_rememberedIdentifierKey, identifier);
+    } else {
+      await prefs.remove(_rememberedIdentifierKey);
+    }
+  }
+
+  Future<bool> getRememberMe() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_rememberMeKey) ?? false;
+  }
+
+  Future<String?> getRememberedIdentifier() async {
+    final prefs = await SharedPreferences.getInstance();
+    final identifier = prefs.getString(_rememberedIdentifierKey);
+    if (identifier == null || identifier.isEmpty) return null;
+    return identifier;
   }
 
   Future<UserProfile?> getCurrentUser() async {

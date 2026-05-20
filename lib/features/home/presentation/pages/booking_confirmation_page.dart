@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/widgets/animated_health_background.dart';
+import '../../../splash/presentation/widgets/app_logo.dart';
 import 'booking_record.dart';
 import 'live_token_status_page.dart';
 import 'booking_details_downloader.dart';
@@ -54,7 +55,16 @@ class BookingConfirmationPage extends StatelessWidget {
     final loc = AppLocalizations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.bookingConfirmation)),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            AppLogo(size: 28),
+            SizedBox(width: 10),
+            Text('AarohCare'),
+          ],
+        ),
+      ),
       body: AnimatedHealthBackground(
         padding: EdgeInsets.zero,
         child: SingleChildScrollView(

@@ -1,0 +1,16 @@
+{
+  "buildCommand": "flutter build web",
+  "outputDirectory": "build/web",
+  "framework": "other",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "env": {
+    "FLUTTER_SUPPRESS_ANALYTICS": "true",
+    "JAVA_OPTS": "-Xmx2g"
+  },
+  "regions": ["sfo1"]
+}

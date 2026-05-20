@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/widgets/animated_health_background.dart';
+import '../../../splash/presentation/widgets/app_logo.dart';
 import '../../../auth/data/models/user_profile.dart';
 import '../../../auth/data/repositories/local_auth_repository.dart';
 
@@ -80,7 +81,14 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            AppLogo(size: 28),
+            SizedBox(width: 10),
+            Text('AarohCare'),
+          ],
+        ),
         centerTitle: true,
       ),
       body: FutureBuilder<UserProfile?>(

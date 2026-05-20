@@ -7,6 +7,7 @@ import '../../../../core/l10n/app_locale_controller.dart';
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/routing/app_routes.dart';
 import '../../../../core/widgets/animated_health_background.dart';
+import '../../../splash/presentation/widgets/app_logo.dart';
 import '../../../auth/data/models/user_profile.dart';
 import '../../../auth/data/repositories/local_auth_repository.dart';
 import 'booking_record.dart';
@@ -345,23 +346,30 @@ class _AdminHomePageState extends State<AdminHomePage>
       extendBody: false,
       appBar: AppBar(
         centerTitle: true,
-        title: AnimatedBuilder(
-          animation: _titleAnimationController,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _titleScaleAnimation.value,
-              child: Opacity(
-                opacity: _titleFadeAnimation.value,
-                child: const Text(
-                  'Alshifa Medicals - Admin Side',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const AppLogo(size: 28),
+            const SizedBox(width: 10),
+            AnimatedBuilder(
+              animation: _titleAnimationController,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _titleScaleAnimation.value,
+                  child: Opacity(
+                    opacity: _titleFadeAnimation.value,
+                    child: const Text(
+                      'Alshifa Medicals - Admin Side',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ],
         ),
         actions: [
           ValueListenableBuilder<Locale>(
@@ -408,6 +416,8 @@ class _AdminHomePageState extends State<AdminHomePage>
                   return ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
+                      const Center(child: AppLogo(size: 120)),
+                      const SizedBox(height: 16),
                       const Align(
                         alignment: Alignment.centerLeft,
                         child: _CurrentOpEditor(),

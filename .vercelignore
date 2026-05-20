@@ -1,0 +1,26 @@
+# Ignore Flutter-specific directories
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+
+# Ignore platform-specific directories (we only need web)
+android/
+ios/
+linux/
+macos/
+windows/
+
+# Ignore development files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+
+# Ignore test files
+test/
+
+# Ignore documentation
+README.md
+*.md

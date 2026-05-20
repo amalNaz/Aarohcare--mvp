@@ -21,6 +21,27 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   bool _passwordVisible = false;
+  bool _rememberMe = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRememberedIdentifier();
+  }
+
+  Future<void> _loadRememberedIdentifier() async {
+    final rememberMe = await LocalAuthRepository.instance.getRememberMe();
+    final rememberedIdentifier =
+        await LocalAuthRepository.instance.getRememberedIdentifier();
+    if (!mounted) return;
+
+    setState(() {
+      _rememberMe = rememberMe;
+      if (rememberedIdentifier != null) {
+        _identifierController.text = rememberedIdentifier;
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -31,7 +52,6 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
-    final loc = AppLocalizations.of(context);
 
     setState(() {
       _isLoading = true;
@@ -48,18 +68,29 @@ class _LoginPageState extends State<LoginPage> {
       _isLoading = false;
     });
 
+    if (!mounted) return;
+
+    final loc = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+
     if (user == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(content: Text(loc.accountNotFound)),
       );
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    await LocalAuthRepository.instance.setRememberMe(
+      remember: _rememberMe,
+      identifier: _identifierController.text.trim(),
+    );
+
+    messenger.showSnackBar(
       SnackBar(content: Text(loc.loginSuccess)),
     );
 
-    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+    navigator.pushNamedAndRemoveUntil(AppRoutes.home, (_) => false);
   }
 
   @override
@@ -75,6 +106,14 @@ class _LoginPageState extends State<LoginPage> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                AppLogo(size: 28),
+                SizedBox(width: 10),
+                Text('AarohCare'),
+              ],
+            ),
             actions: [
               PopupMenuButton<Locale>(
                 icon: const Icon(Icons.language),
@@ -178,6 +217,17 @@ class _LoginPageState extends State<LoginPage> {
                                     final text = value ?? '';
                                     if (text.isEmpty) return loc.pleaseEnterPassword;
                                     return null;
+                                  },
+                                ),
+                                CheckboxListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  controlAffinity: ListTileControlAffinity.leading,
+                                  title: const Text('Remember me'),
+                                  value: _rememberMe,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _rememberMe = value ?? true;
+                                    });
                                   },
                                 ),
                                 const SizedBox(height: 20),

@@ -85,6 +85,14 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
               icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
             ),
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                AppLogo(size: 28),
+                SizedBox(width: 10),
+                Text('AarohCare'),
+              ],
+            ),
             actions: [
               PopupMenuButton<Locale>(
                 icon: const Icon(Icons.language),

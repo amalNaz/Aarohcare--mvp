@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/app_localizations.dart';
 import '../../../../core/widgets/animated_health_background.dart';
+import '../../../splash/presentation/widgets/app_logo.dart';
 import 'booking_record.dart';
 import 'live_booking_store.dart';
 
@@ -51,7 +52,16 @@ class _LiveTokenStatusPageState extends State<LiveTokenStatusPage> {
             : widget.bookedRecords;
 
     return Scaffold(
-      appBar: AppBar(title: Text(loc.liveTokenStatus)),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            AppLogo(size: 28),
+            SizedBox(width: 10),
+            Text('AarohCare'),
+          ],
+        ),
+      ),
       body: AnimatedHealthBackground(
         padding: EdgeInsets.zero,
         child: SingleChildScrollView(

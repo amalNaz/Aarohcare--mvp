@@ -63,7 +63,7 @@ class _SplashPageState extends State<SplashPage> {
                 const AppLogo(size: 120),
                 const SizedBox(height: 18),
                 Text(
-                  'HealthBridge',
+                  'AarohCare',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(height: 8),

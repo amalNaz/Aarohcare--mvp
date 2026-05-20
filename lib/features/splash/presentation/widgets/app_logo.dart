@@ -11,24 +11,32 @@ class AppLogo extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF62B6F7), Color(0xFF80D8FF)],
-        ),
-        borderRadius: BorderRadius.circular(size * 0.3),
+        borderRadius: BorderRadius.circular(size * 0.25),
+        color: Colors.white,
         boxShadow: const [
           BoxShadow(
-            color: Color(0x3362B6F7),
-            blurRadius: 18,
-            offset: Offset(0, 10),
+            color: Color(0x33000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
           ),
         ],
       ),
-      child: Icon(
-        Icons.medical_services_rounded,
-        color: Colors.white,
-        size: size * 0.5,
+      clipBehavior: Clip.hardEdge,
+      child: Image.asset(
+        'assets/images/aarohcare_logo.png',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: const Color(0xFF62B6F7),
+            child: Icon(
+              Icons.medical_services_rounded,
+              color: Colors.white,
+              size: size * 0.5,
+            ),
+          );
+        },
       ),
     );
   }

@@ -7,7 +7,7 @@ void main() {
     await tester.pumpWidget(const DoctorBookingApp());
     await tester.pump();
 
-    expect(find.text('HealthBridge'), findsOneWidget);
+    expect(find.text('AarohCare'), findsOneWidget);
     expect(find.text('Doctor Booking Made Easy'), findsOneWidget);
 
     await tester.pump(const Duration(seconds: 2));
